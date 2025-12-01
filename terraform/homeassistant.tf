@@ -1,6 +1,5 @@
 module "homeassistant" {
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/homeassistant"
-  version = "main"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/homeassistant?ref=main"
   depends_on = [
     data.kubernetes_namespace.namespace,
     module.storageclass

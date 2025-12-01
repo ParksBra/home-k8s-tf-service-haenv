@@ -1,6 +1,5 @@
 module "akri" {
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/akri"
-  version = "main"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/akri?ref=main"
   depends_on = [
     data.kubernetes_namespace.namespace,
   ]
