@@ -1,3 +1,8 @@
+output "namespace" {
+  description = "The Kubernetes namespace where the Home Assistant environment is deployed."
+  value       = data.kubernetes_namespace.namespace.metadata[0].name
+}
+
 output "homeassistant_service_address" {
   description = "The address of the Home Assistant service."
   value       = module.homeassistant.service_address

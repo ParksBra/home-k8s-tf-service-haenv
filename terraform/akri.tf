@@ -20,6 +20,6 @@ data "kubernetes_resources" "akri_udev_instances" {
   ]
   api_version    = "akri.sh/v0"
   kind           = "Instance"
-  namespace      = module.akri.namespace_name
+  namespace      = module.akri.namespace
   limit          = 1 # Hopefully in any future there will only be one instance and udev configuration. TODO: improve this if needed.
 }
