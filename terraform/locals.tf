@@ -16,6 +16,6 @@ locals {
     "SUBSYSTEM==\"${var.akri_udev_subsystem}\", ATTRS{idVendor}==\"${var.akri_zigbee_radio_vendor_id}\", ATTRS{idProduct}==\"${var.akri_zigbee_radio_product_id}\""
   ]
 
-  mosquitto_mqtt_broker_address = var.mosquitto_enabled ? "mqtt://${module.mosquitto.service_address}:${module.mosquitto.service_mqtt_port}" : ""
+  mosquitto_mqtt_broker_address = var.mosquitto_enabled ? "mqtt://${module.mosquitto[0].service_address}:${module.mosquitto[0].service_mqtt_port}" : ""
 
 }
