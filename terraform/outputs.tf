@@ -68,8 +68,3 @@ output "persistent_storage_enabled" {
   description = "Whether persistent storage is enabled for the Home Assistant environment."
   value       = var.enable_persistent_storage
 }
-
-output "storageclass_id" {
-  description = "The ID of the storage class used for persistent storage."
-  value       = var.enable_persistent_storage ? module.storageclass[0].id : null
-}
