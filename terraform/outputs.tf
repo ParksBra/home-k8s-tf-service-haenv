@@ -35,7 +35,7 @@ output "codeserver_service_address" {
 
 output "codeserver_service_port" {
   description = "The port of the Home Assistant Code Server service."
-  value       = var.codeserver_enabled ? module.homeassistant.codeserver_service_port : 0
+  value       = var.codeserver_enabled ? module.homeassistant.codeserver_service_port : null
 }
 
 output "codeserver_ingress_enabled" {
@@ -60,12 +60,12 @@ output "mosquitto_service_address" {
 
 output "mosquitto_mqtt_port" {
   description = "The port of the Mosquitto service."
-  value       = var.mosquitto_enabled ? module.mosquitto[0].service_mqtt_port : 0
+  value       = var.mosquitto_enabled ? module.mosquitto[0].service_mqtt_port : null
 }
 
 output "mosquitto_websocket_port" {
   description = "The WebSocket port of the Mosquitto service."
-  value       = var.mosquitto_enabled ? module.mosquitto[0].service_websocket_port : 0
+  value       = var.mosquitto_enabled ? module.mosquitto[0].service_websocket_port : null
 }
 
 output "mosquitto_admin_username" {
@@ -91,7 +91,7 @@ output "zigbee2mqtt_service_address" {
 
 output "zigbee2mqtt_service_port" {
   description = "The port of the Zigbee2MQTT service."
-  value       = var.zigbee2mqtt_enabled ? module.zigbee2mqtt[0].service_port : 0
+  value       = var.zigbee2mqtt_enabled ? module.zigbee2mqtt[0].service_port : null
 }
 
 output "zigbee2mqtt_ingress_enabled" {

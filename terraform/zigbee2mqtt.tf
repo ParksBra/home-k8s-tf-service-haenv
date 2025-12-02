@@ -31,9 +31,9 @@ module "zigbee2mqtt" {
   ingress_host_address     = local.zigbee2mqtt_subdomain
   ingress_annotations      = local.environment_ingress_annotations
 
-  pod_additional_resources = length(data.kubernetes_resources.akri_udev_instances.objects) > 0 ? {
-    "${data.kubernetes_resources.akri_udev_instances.objects[0].spec.cdiName}" = "1"
+  pod_additional_resources = length(data.kubernetes_resources.akri_udev_instances[0].objects) > 0 ? {
+    "${data.kubernetes_resources.akri_udev_instances[0].objects[0].spec.cdiName}" = "1"
   } : {}
 
-  zigbee_serial_port       = length(data.kubernetes_resources.akri_udev_instances.objects) > 0 ? data.kubernetes_resources.akri_udev_instances.objects[0].spec.brokerProperties.UDEV_DEVNODE_0 : null
+  zigbee_serial_port       = local.akri_udev_serial_port
 }
