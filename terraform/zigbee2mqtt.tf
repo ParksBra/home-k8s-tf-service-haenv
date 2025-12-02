@@ -4,8 +4,7 @@ module "zigbee2mqtt" {
     data.kubernetes_namespace.namespace,
     module.akri,
     data.kubernetes_resources.akri_udev_instances,
-    module.mosquitto,
-    module.storageclass,
+    module.mosquitto
   ]
 
   chart_cleanup_on_fail    = var.chart_cleanup_on_fail

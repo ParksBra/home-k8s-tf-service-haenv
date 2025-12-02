@@ -1,8 +1,7 @@
 module "mosquitto" {
   source = "github.com/ParksBra/home-k8s-tf-lib//modules/mosquitto?ref=main"
   depends_on = [
-    data.kubernetes_namespace.namespace,
-    module.storageclass
+    data.kubernetes_namespace.namespace
   ]
 
   chart_cleanup_on_fail           = var.chart_cleanup_on_fail
