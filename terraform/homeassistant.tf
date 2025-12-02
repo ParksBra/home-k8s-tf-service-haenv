@@ -30,7 +30,7 @@ module "homeassistant" {
   data_volume_size_gb              = local.homeassistant_storage_size_gb
   data_storage_class_name          = var.enable_persistent_storage ? local.environment_storage_class_name : ""
 
-  codeserver_enabled               = true
+  codeserver_enabled               = var.codeserver_enabled
   codeserver_auth_enabled          = true
   codeserver_ingress_enabled       = true
   codeserver_ingress_host_address  = local.homeassistant_codeserver_subdomain

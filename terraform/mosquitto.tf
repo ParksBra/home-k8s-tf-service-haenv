@@ -1,4 +1,5 @@
 module "mosquitto" {
+  count = var.mosquitto_enabled ? 1 : 0
   source = "github.com/ParksBra/home-k8s-tf-lib//modules/mosquitto?ref=create_platform_tf"
   depends_on = [
     data.kubernetes_namespace.namespace

@@ -1,4 +1,5 @@
 module "zigbee2mqtt" {
+  count = var.zigbee2mqtt_enabled ? 1 : 0
   source = "github.com/ParksBra/home-k8s-tf-lib//modules/zigbee2mqtt?ref=create_platform_tf"
   depends_on = [
     data.kubernetes_namespace.namespace,
@@ -18,8 +19,8 @@ module "zigbee2mqtt" {
   create_namespace         = false
 
   mqtt_broker_address      = local.mosquitto_mqtt_broker_address
-  mqtt_broker_username     = module.mosquitto.admin_username
-  mqtt_broker_password     = module.mosquitto.admin_password
+  mqtt_broker_username     = module.mosquitto[0].admin_username
+  mqtt_broker_password     = module.mosquitto[0].admin_password
 
   data_persistence_enabled = var.enable_persistent_storage
   data_volume_size_gb      = local.zigbee2mqtt_storage_size_gb

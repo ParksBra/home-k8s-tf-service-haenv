@@ -153,3 +153,21 @@ variable "chart_cleanup_on_fail" {
   type        = bool
   default     = true
 }
+
+variable "mosquitto_enabled" {
+  description = "Whether to deploy the Mosquitto MQTT broker."
+  type        = bool
+  default     = true
+}
+
+variable "zigbee2mqtt_enabled" {
+  description = "Whether to deploy Zigbee2MQTT. Requires Mosquitto to be enabled."
+  type        = bool
+  default     = true
+}
+
+variable "codeserver_enabled" {
+  description = "Whether to enable the Home Assistant Code Server."
+  type        = bool
+  default     = true
+}
