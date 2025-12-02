@@ -24,7 +24,7 @@ module "zigbee2mqtt" {
 
   data_persistence_enabled = var.enable_persistent_storage
   data_volume_size_gb      = local.zigbee2mqtt_storage_size_gb
-  data_storage_class_name  = var.enable_persistent_storage ? module.storageclass[0].name : ""
+  data_storage_class_name  = var.enable_persistent_storage ? local.environment_storage_class_name : ""
 
   ingress_enabled          = true
   ingress_class_name       = local.environment_ingress_class_name

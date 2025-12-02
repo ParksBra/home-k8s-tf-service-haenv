@@ -19,7 +19,7 @@ module "mosquitto" {
 
   data_persistence_enabled        = var.enable_persistent_storage
   data_volume_size_gb             = local.mosquitto_storage_size_gb
-  data_storage_class_name         = var.enable_persistent_storage ? module.storageclass[0].name : ""
+  data_storage_class_name         = var.enable_persistent_storage ? local.environment_storage_class_name : ""
 
   admin_username                  = var.mosquitto_admin_username
   admin_password                  = var.mosquitto_admin_password

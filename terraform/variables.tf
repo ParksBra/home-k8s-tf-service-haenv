@@ -69,22 +69,16 @@ variable "zigbee2mqtt_subdomain" {
   default     = "z2m"
 }
 
-variable "zfs_pool_name" {
-  description = "The name of the ZFS pool to use for storage."
-  type        = string
-  default     = "zfspv-pool"
-}
-
 variable "enable_persistent_storage" {
   description = "Whether to enable persistent storage for the Home Assistant environment."
   type        = bool
   default     = true
 }
 
-variable "storage_class_reclaim_policy" {
-  description = "The reclaim policy for the storage class."
+variable "storage_class_name" {
+  description = "The name of the storage class to use for persistent storage."
   type        = string
-  default     = "Retain"
+  default     = "standard"
 }
 
 variable "homeassistant_storage_size_gb" {

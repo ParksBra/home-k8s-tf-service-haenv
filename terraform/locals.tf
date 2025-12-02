@@ -7,8 +7,7 @@ locals {
   homeassistant_codeserver_subdomain = "${var.homeassistant_codeserver_subdomain}.${local.homeassistant_subdomain}"
   zigbee2mqtt_subdomain = "${var.zigbee2mqtt_subdomain}.${local.parent_domain}"
 
-  zfs_pool_name = var.zfs_pool_name
-  storage_class_reclaim_policy = var.storage_class_reclaim_policy
+  environment_storage_class_name = var.storage_class_name
   homeassistant_storage_size_gb = var.homeassistant_storage_size_gb
   mosquitto_storage_size_gb = var.mosquitto_storage_size_gb
   zigbee2mqtt_storage_size_gb = var.zigbee2mqtt_storage_size_gb
