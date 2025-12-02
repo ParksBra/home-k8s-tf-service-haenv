@@ -1,5 +1,5 @@
 module "zigbee2mqtt" {
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/zigbee2mqtt?ref=main"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/zigbee2mqtt?ref=create_platform_tf"
   depends_on = [
     data.kubernetes_namespace.namespace,
     module.akri,
