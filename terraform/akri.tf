@@ -16,11 +16,12 @@ module "akri" {
 }
 
 data "kubernetes_resources" "akri_udev_instances" {
+  count = var.zigbee2mqtt_enabled ? 1 : 0
   depends_on = [
     module.akri
   ]
   api_version    = "akri.sh/v0"
   kind           = "Instance"
-  namespace      = module.akri.namespace
+  namespace      = module.akri[0].namespace
   limit          = 1 # Hopefully in any future there will only be one instance and udev configuration. TODO: improve this if needed.
 }
