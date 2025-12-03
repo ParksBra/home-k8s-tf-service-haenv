@@ -1,22 +1,37 @@
 locals {
-  environment_namespace = data.kubernetes_namespace.namespace.metadata[0].name
-  environment_ingress_class_name = var.ingress_class_name
-  environment_ingress_annotations = var.ingress_annotations
-  parent_domain = var.parent_domain
-  homeassistant_subdomain = "${var.homeassistant_subdomain}.${local.parent_domain}"
-  homeassistant_codeserver_subdomain = var.codeserver_enabled ? "${var.homeassistant_codeserver_subdomain}.${local.homeassistant_subdomain}" : ""
-  zigbee2mqtt_subdomain = var.zigbee2mqtt_enabled ? "${var.zigbee2mqtt_subdomain}.${local.parent_domain}" : ""
+  # Kubernetes Dashboard configuration
+  kubernetes_dashboard_enabled = true
+  kubernetes_dashboard_create = local.kubernetes_dashboard_enabled && !local.disable_nonplatform_modules
+  kubernetes_dashboard_namespace = "kubernetes-dashboard"
+  kubernetes_dashboard_ingress_class_name = "nginx"
+  kubernetes_dashboard_ingress_host_address = "dashboard.k8s.${local.parent_domain}"
+  kubernetes_dashboard_chart_linting_enabled = true
+  kubernetes_dashboard_ingress_annotations = {
+    "cert-manager.io/cluster-issuer" = module.network.cert_manager_cluster_issuer_name
+  }
+}
 
-  environment_storage_class_name = var.storage_class_name
-  homeassistant_storage_size_gb = var.homeassistant_storage_size_gb
-  mosquitto_storage_size_gb = var.mosquitto_storage_size_gb
-  zigbee2mqtt_storage_size_gb = var.zigbee2mqtt_storage_size_gb
+locals {
+  # Homeassistant environment configuration
+  haenv_enabled = true
+  haenv_namespace = "home-assistant"
+  haenv_ingress_class_name = "nginx"
+  haenv_homeassistant_storage_size_gb = 32
+  haenv_mosquitto_storage_size_gb = 8
+  haenv_zigbee2mqtt_storage_size_gb = 8
 
-  akri_udev_discovery_rules_list = [
-    "SUBSYSTEM==\"${var.akri_udev_subsystem}\", ATTRS{idVendor}==\"${var.akri_zigbee_radio_vendor_id}\", ATTRS{idProduct}==\"${var.akri_zigbee_radio_product_id}\""
+  haenv_chart_linting_enabled = false
+
+  haenv_ingress_annotations = {
+    "cert-manager.io/cluster-issuer" = module.network.cert_manager_cluster_issuer_name
+  }
+
+  haenv_homeassistant_trusted_proxies = [
+    "127.0.0.0/8",
+    local.pod_network_cidr,
+    local.pod_service_cidr
   ]
-  akri_udev_serial_port = var.zigbee2mqtt_enabled && length(data.kubernetes_resources.akri_udev_instances[0].objects) > 0 ? data.kubernetes_resources.akri_udev_instances[0].objects[0].spec.brokerProperties.UDEV_DEVNODE_0 : null
 
-  mosquitto_mqtt_broker_address = var.mosquitto_enabled ? "mqtt://${module.mosquitto[0].service_address}:${module.mosquitto[0].service_mqtt_port}" : ""
-
+  haenv_mosquitto_admin_username = "admin"
+  haenv_mosquitto_admin_password_infisical_secret_name = "mosquitto-account-password"
 }
