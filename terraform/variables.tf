@@ -34,3 +34,8 @@ variable "infisical_environment_slug" {
   description = "The Infisical Environment Slug"
   type        = string
 }
+
+variable "stack_lifecycle" {
+  description = "The stack lifecycle stage (e.g., development, staging, production)"
+  type        = string
+}

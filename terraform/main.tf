@@ -1,8 +1,8 @@
 module "homeassistant_environment" {
   count = local.haenv_enabled ? 1 : 0
   depends_on = [
-    module.network,
-    module.storage,
+    data.terraform_remote_state.platform_network,
+    data.terraform_remote_state.platform_storage
   ]
   source = "../modules/_haenv"
 
@@ -23,7 +23,7 @@ module "homeassistant_environment" {
 
   parent_domain = local.parent_domain
 
-  storage_class_name = kubernetes_storage_class.service.metadata[0].name
+  storage_class_name = local.storage_class_name
 
   homeassistant_storage_size_gb = local.haenv_homeassistant_storage_size_gb
   mosquitto_storage_size_gb = local.haenv_mosquitto_storage_size_gb

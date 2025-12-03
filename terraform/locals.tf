@@ -1,30 +1,37 @@
-locals {
-  # Kubernetes Dashboard configuration
-  kubernetes_dashboard_enabled = true
-  kubernetes_dashboard_create = local.kubernetes_dashboard_enabled && !local.disable_nonplatform_modules
-  kubernetes_dashboard_namespace = "kubernetes-dashboard"
-  kubernetes_dashboard_ingress_class_name = "nginx"
-  kubernetes_dashboard_ingress_host_address = "dashboard.k8s.${local.parent_domain}"
-  kubernetes_dashboard_chart_linting_enabled = true
-  kubernetes_dashboard_ingress_annotations = {
-    "cert-manager.io/cluster-issuer" = module.network.cert_manager_cluster_issuer_name
-  }
+local {
+  # Network reference
+  parent_domain = data.terraform_remote_state.platform_network.outputs.external_parent_domain
+  pod_network_cidr = data.terraform_remote_state.platform_network.outputs.pod_network_cidr
+  pod_service_cidr = data.terraform_remote_state.platform_network.outputs.pod_service_cidr
+  cluster_issuer_enabled = data.terraform_remote_state.platform_network.outputs.cert_manager_cluster_issuer_enabled
+  cluster_issuer_name = data.terraform_remote_state.platform_network.outputs.cert_manager_cluster_issuer_name
+
+  dns_provider_api_token_infisical_secret_name = data.terraform_remote_state.platform_network.outputs.dns_provider_api_token_infisical_secret_name
+  dns_records_proxy_enabled = data.terraform_remote_state.platform_network.outputs.dns_records_proxy_enabled
+  dns_records_default_comment = data.terraform_remote_state.platform_network.outputs.dns_records_default_comment
+  dns_ttl_seconds = data.terraform_remote_state.platform_network.outputs.dns_ttl_seconds
+
+  ingress_class_name = data.terraform_remote_state.platform_network.outputs.primary_ingress_class_name
+
+  storage_class_name = data.terraform_remote_state.platform_storage.outputs.primary_storage_class_name
+
+  create_dns_records = true
 }
 
 locals {
   # Homeassistant environment configuration
   haenv_enabled = true
   haenv_namespace = "home-assistant"
-  haenv_ingress_class_name = "nginx"
+  haenv_ingress_class_name = local.ingress_class_name
   haenv_homeassistant_storage_size_gb = 32
   haenv_mosquitto_storage_size_gb = 8
   haenv_zigbee2mqtt_storage_size_gb = 8
 
   haenv_chart_linting_enabled = false
 
-  haenv_ingress_annotations = {
-    "cert-manager.io/cluster-issuer" = module.network.cert_manager_cluster_issuer_name
-  }
+  haenv_ingress_annotations = local.cluster_issuer_enabled ? {
+    "cert-manager.io/cluster-issuer" = local.cluster_issuer_name
+  } : {}
 
   haenv_homeassistant_trusted_proxies = [
     "127.0.0.0/8",
