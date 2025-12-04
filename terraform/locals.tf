@@ -40,5 +40,4 @@ locals {
   ]
 
   haenv_mosquitto_admin_username = "admin"
-  haenv_mosquitto_admin_password_infisical_secret_name = "mosquitto-account-password"
 }

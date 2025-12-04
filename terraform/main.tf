@@ -17,7 +17,6 @@ module "homeassistant_environment" {
   ingress_annotations = local.haenv_ingress_annotations
 
   mosquitto_admin_username = local.haenv_mosquitto_admin_username
-  mosquitto_admin_password = data.infisical_secrets.environment.secrets[local.haenv_mosquitto_admin_password_infisical_secret_name].value
 
   homeassistant_trusted_proxies = local.haenv_homeassistant_trusted_proxies
 
