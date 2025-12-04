@@ -19,6 +19,6 @@ variable "azure_key_vault_name" {
 }
 
 variable "stack_lifecycle" {
-  description = "The stack lifecycle stage (e.g., development, staging, production)"
+  description = "The stack lifecycle stage (e.g., prod, dev, test)"
   type        = string
 }

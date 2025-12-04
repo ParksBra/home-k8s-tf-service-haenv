@@ -2,10 +2,10 @@ locals {
   environment_namespace = data.kubernetes_namespace.namespace.metadata[0].name
   environment_ingress_class_name = var.ingress_class_name
   environment_ingress_annotations = var.ingress_annotations
-  parent_domain = var.parent_domain
-  homeassistant_subdomain = "${var.homeassistant_subdomain}.${local.parent_domain}"
+  external_domain = var.external_domain
+  homeassistant_subdomain = "${var.homeassistant_subdomain}.${local.external_domain}"
   homeassistant_codeserver_subdomain = var.codeserver_enabled ? "${var.homeassistant_codeserver_subdomain}.${local.homeassistant_subdomain}" : ""
-  zigbee2mqtt_subdomain = var.zigbee2mqtt_enabled ? "${var.zigbee2mqtt_subdomain}.${local.parent_domain}" : ""
+  zigbee2mqtt_subdomain = var.zigbee2mqtt_enabled ? "${var.zigbee2mqtt_subdomain}.${local.external_domain}" : ""
 
   environment_storage_class_name = var.storage_class_name
   homeassistant_storage_size_gb = var.homeassistant_storage_size_gb

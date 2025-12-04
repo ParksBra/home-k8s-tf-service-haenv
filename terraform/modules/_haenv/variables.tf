@@ -40,8 +40,8 @@ variable "mosquitto_admin_password" {
   sensitive   = true
 }
 
-variable "parent_domain" {
-  description = "The parent domain for the Home Assistant environment."
+variable "external_domain" {
+  description = "The external domain for the Home Assistant environment."
   type        = string
 }
 

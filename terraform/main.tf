@@ -20,7 +20,7 @@ module "homeassistant_environment" {
 
   homeassistant_trusted_proxies = local.haenv_homeassistant_trusted_proxies
 
-  parent_domain = local.parent_domain
+  external_domain = local.external_domain
 
   storage_class_name = local.storage_class_name
 

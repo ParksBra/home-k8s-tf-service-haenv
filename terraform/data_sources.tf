@@ -1,15 +1,14 @@
-data "terraform_remote_state" "platform_storage" {
-  backend = "kubernetes"
-  config = {
-    secret_suffix = "platform_storage-${var.stack_lifecycle}"
+data "kubernetes_config_map" "network_context" {
+  metadata {
+    name      = "context"
+    namespace = "platform-network"
   }
 }
 
-data "terraform_remote_state" "platform_network" {
-  backend = "kubernetes"
-  config = {
-    namespace     = "terraform-platform_network-${var.stack_lifecycle}"
-    secret_suffix = "platform_network-${var.stack_lifecycle}"
+data "kubernetes_config_map" "storage_context" {
+  metadata {
+    name      = "context"
+    namespace = "platform-storage"
   }
 }
 
