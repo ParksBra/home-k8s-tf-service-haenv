@@ -1,10 +1,6 @@
-provider "infisical" {
-  host = var.infisical_url
-  auth = {
-    universal = {
-      client_id     = var.infisical_auth_client_id
-      client_secret = var.infisical_auth_client_secret
-    }
+provider "azurerm" {
+  features {
+    key_vault {}
   }
 }
 
@@ -25,5 +21,5 @@ provider "helm" {
 provider "jinja" {}
 
 provider "cloudflare" {
-  api_token = data.infisical_secrets.environment.secrets[local.cloudflare_provider_api_token_infisical_secret_name].value
+  api_token = data.azurerm_key_vault_secret.cloudflare_provider_api_token.value
 }

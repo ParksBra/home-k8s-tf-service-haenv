@@ -1,4 +1,4 @@
-local {
+locals {
   # Network reference
   parent_domain = data.terraform_remote_state.platform_network.outputs.external_parent_domain
   pod_network_cidr = data.terraform_remote_state.platform_network.outputs.pod_network_cidr
@@ -6,7 +6,7 @@ local {
   cluster_issuer_enabled = data.terraform_remote_state.platform_network.outputs.cert_manager_cluster_issuer_enabled
   cluster_issuer_name = data.terraform_remote_state.platform_network.outputs.cert_manager_cluster_issuer_name
 
-  dns_provider_api_token_infisical_secret_name = data.terraform_remote_state.platform_network.outputs.dns_provider_api_token_infisical_secret_name
+  cloudflare_provider_api_token_secret_name = data.terraform_remote_state.platform_network.outputs.cloudflare_provider_api_token_secret_name
   dns_records_proxy_enabled = data.terraform_remote_state.platform_network.outputs.dns_records_proxy_enabled
   dns_records_default_comment = data.terraform_remote_state.platform_network.outputs.dns_records_default_comment
   dns_ttl_seconds = data.terraform_remote_state.platform_network.outputs.dns_ttl_seconds

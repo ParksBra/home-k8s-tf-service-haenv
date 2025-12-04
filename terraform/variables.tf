@@ -8,30 +8,13 @@ variable "python_executable" {
   type        = string
 }
 
-variable "infisical_url" {
-  description = "The Infisical API URI"
+variable "azure_resource_group_name" {
+  description = "The name of the Azure Resource Group"
   type        = string
 }
 
-variable "infisical_auth_client_id" {
-  description = "The Infisical Auth Client ID"
-  type        = string
-  sensitive   = true
-}
-
-variable "infisical_auth_client_secret" {
-  description = "The Infisical Auth Client Secret"
-  type        = string
-  sensitive   = true
-}
-
-variable "infisical_project_id" {
-  description = "The Infisical Project ID"
-  type        = string
-}
-
-variable "infisical_environment_slug" {
-  description = "The Infisical Environment Slug"
+variable "azure_key_vault_name" {
+  description = "The name of the Azure Key Vault"
   type        = string
 }
 

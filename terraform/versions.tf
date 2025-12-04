@@ -1,8 +1,8 @@
 terraform {
   required_providers {
-    infisical = {
-      source  = "infisical/infisical"
-      version = "~> 0.0"
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
