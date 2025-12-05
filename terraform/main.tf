@@ -1,8 +1,8 @@
 module "homeassistant_environment" {
   count = local.haenv_enabled ? 1 : 0
   depends_on = [
-    data.terraform_remote_state.network_context,
-    data.terraform_remote_state.storage_context
+    data.kubernetes_config_map.network_context,
+    data.kubernetes_config_map.storage_context
   ]
   source = "../modules/_haenv"
 
