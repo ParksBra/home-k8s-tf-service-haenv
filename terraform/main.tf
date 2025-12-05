@@ -4,7 +4,7 @@ module "homeassistant_environment" {
     data.kubernetes_config_map.network_context,
     data.kubernetes_config_map.storage_context
   ]
-  source = "../modules/_haenv"
+  source = "./modules/_haenv"
 
   chart_linting_enabled = local.haenv_chart_linting_enabled
 
