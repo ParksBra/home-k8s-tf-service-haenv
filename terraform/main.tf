@@ -8,8 +8,6 @@ module "homeassistant_environment" {
 
   chart_linting_enabled = local.haenv_chart_linting_enabled
 
-  python_executable = var.python_executable
-
   namespace = local.haenv_namespace
   create_namespace = true
 

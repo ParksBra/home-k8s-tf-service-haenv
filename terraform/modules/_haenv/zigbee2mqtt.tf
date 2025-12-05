@@ -1,6 +1,6 @@
 module "zigbee2mqtt" {
   count = var.zigbee2mqtt_enabled ? 1 : 0
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/zigbee2mqtt?ref=1.0.0"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/zigbee2mqtt?ref=1.3.0"
   depends_on = [
     data.kubernetes_namespace.namespace,
     module.akri,
