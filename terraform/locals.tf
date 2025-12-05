@@ -1,6 +1,7 @@
 locals {
   # Network reference
   external_domain = data.kubernetes_config_map.network_context.data["external_domain"]
+  external_ingress_ip = data.kubernetes_config_map.network_context.data["external_ingress_ip"]
 
   pod_network_cidr = data.kubernetes_config_map.network_context.data["pod_network_cidr"]
   service_network_cidr = data.kubernetes_config_map.network_context.data["service_network_cidr"]
