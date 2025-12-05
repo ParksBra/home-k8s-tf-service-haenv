@@ -29,8 +29,9 @@ variable "mosquitto_admin_username" {
 }
 
 variable "mosquitto_admin_password" {
-  description = "The admin password for the Mosquitto MQTT broker."
+  description = "The admin password for the Mosquitto MQTT broker. If not provided, a random password will be generated."
   type        = string
+  default     = null
   sensitive   = true
 }
 
