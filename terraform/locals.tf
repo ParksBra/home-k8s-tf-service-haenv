@@ -7,7 +7,7 @@ locals {
   service_network_cidr = data.kubernetes_config_map.network_context.data.service_network_cidr
   cluster_domain = data.kubernetes_config_map.network_context.data.cluster_domain
 
-  cluster_issuer_enabled = tobool(data.kubernetes_config_map.network_context.data.cert_manager_cluster_issuer_created)
+  cluster_issuer_created = tobool(data.kubernetes_config_map.network_context.data.cert_manager_cluster_issuer_created)
   cluster_issuer_name = data.kubernetes_config_map.network_context.data.cert_manager_cluster_issuer_name
 
   dns_records_default_comment = data.kubernetes_config_map.network_context.data.dns_records_default_comment
@@ -30,7 +30,7 @@ locals {
 
   haenv_chart_linting_enabled = false
 
-  haenv_ingress_annotations = local.cluster_issuer_enabled ? {
+  haenv_ingress_annotations = local.cluster_issuer_created ? {
     "cert-manager.io/cluster-issuer" = local.cluster_issuer_name
   } : {}
 
