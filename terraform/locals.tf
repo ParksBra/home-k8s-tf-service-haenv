@@ -1,22 +1,22 @@
 locals {
   # Network reference
-  external_domain = data.kubernetes_config_map.network_context.data["external_domain"]
-  external_ingress_ip = data.kubernetes_config_map.network_context.data["external_ingress_ip"]
+  external_domain = data.kubernetes_config_map.network_context.data.external_domain
+  external_ingress_ip = data.kubernetes_config_map.network_context.data.external_ingress_ip
 
-  pod_network_cidr = data.kubernetes_config_map.network_context.data["pod_network_cidr"]
-  service_network_cidr = data.kubernetes_config_map.network_context.data["service_network_cidr"]
-  cluster_domain = data.kubernetes_config_map.network_context.data["cluster_domain"]
+  pod_network_cidr = data.kubernetes_config_map.network_context.data.pod_network_cidr
+  service_network_cidr = data.kubernetes_config_map.network_context.data.service_network_cidr
+  cluster_domain = data.kubernetes_config_map.network_context.data.cluster_domain
 
-  cluster_issuer_enabled = tobool(data.kubernetes_config_map.network_context.data["cert_manager_cluster_issuer_enabled"])
-  cluster_issuer_name = data.kubernetes_config_map.network_context.data["cert_manager_cluster_issuer_name"]
+  cluster_issuer_enabled = tobool(data.kubernetes_config_map.network_context.data.cert_manager_cluster_issuer_created)
+  cluster_issuer_name = data.kubernetes_config_map.network_context.data.cert_manager_cluster_issuer_name
 
-  dns_records_proxy_enabled = tobool(data.kubernetes_config_map.network_context.data["dns_records_proxy_enabled"])
-  dns_records_default_comment = data.kubernetes_config_map.network_context.data["dns_records_default_comment"]
-  dns_ttl_seconds = tonumber(data.kubernetes_config_map.network_context.data["dns_ttl_seconds"])
+  dns_records_default_comment = data.kubernetes_config_map.network_context.data.dns_records_default_comment
+  dns_records_proxy_enabled = tobool(data.kubernetes_config_map.network_context.data.dns_records_proxy_enabled)
+  dns_ttl_seconds = tonumber(data.kubernetes_config_map.network_context.data.dns_ttl_seconds)
 
-  ingress_class_name = data.kubernetes_config_map.network_context.data["primary_ingress_class_name"]
+  ingress_class_name = data.kubernetes_config_map.network_context.data.primary_ingress_class_name
 
-  storage_class_name = data.kubernetes_config_map.storage_context.data["primary_storage_class_name"]
+  storage_class_name = data.kubernetes_config_map.storage_context.data.primary_storage_class_name
 }
 
 locals {
