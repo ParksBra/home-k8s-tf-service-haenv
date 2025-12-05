@@ -1,24 +1,14 @@
-variable "kubeconfig_path" {
-  description = "Path to the kubeconfig file"
-  type        = string
-}
-
 variable "python_executable" {
-  description = "Path to the Python executable"
+  description = "The path to the Python executable for Mosquitto password hashing script"
   type        = string
 }
 
-variable "azure_resource_group_name" {
-  description = "The name of the Azure Resource Group"
+variable "azuredevops_library_project_id" {
+  description = "The Azure DevOps project ID containing the variable library"
   type        = string
 }
 
-variable "azure_key_vault_name" {
-  description = "The name of the Azure Key Vault"
-  type        = string
-}
-
-variable "stack_lifecycle" {
-  description = "The stack lifecycle stage (e.g., prod, dev, test)"
+variable "azuredevops_library_name" {
+  description = "The name of the Azure DevOps variable library"
   type        = string
 }

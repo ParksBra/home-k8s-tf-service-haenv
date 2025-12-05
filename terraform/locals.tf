@@ -9,7 +9,6 @@ locals {
   cluster_issuer_enabled = tobool(data.kubernetes_config_map.network_context.data["cert_manager_cluster_issuer_enabled"])
   cluster_issuer_name = data.kubernetes_config_map.network_context.data["cert_manager_cluster_issuer_name"]
 
-  cloudflare_provider_api_token_secret_name = data.kubernetes_config_map.network_context.data["cloudflare_provider_api_token_secret_name"]
   dns_records_proxy_enabled = tobool(data.kubernetes_config_map.network_context.data["dns_records_proxy_enabled"])
   dns_records_default_comment = data.kubernetes_config_map.network_context.data["dns_records_default_comment"]
   dns_ttl_seconds = tonumber(data.kubernetes_config_map.network_context.data["dns_ttl_seconds"])
