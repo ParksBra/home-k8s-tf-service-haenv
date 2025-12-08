@@ -57,11 +57,16 @@ stages:
           terraformBackendNamespace: "kube-system"
           terraformBackendSuffix: "service-haenv"
           terraformExtraEnvironmentVariables:
-            TF_VAR_azuredevops_library_name: "home-k8s-cluster"
-            TF_VAR_azuredevops_library_project_id: "$(System.TeamProjectId)"
-            AZDO_PERSONAL_ACCESS_TOKEN: $(System.AccessToken)
-            AZDO_ORG_SERVICE_URL: $(System.TeamFoundationCollectionUri)
-            CLOUDFLARE_API_TOKEN: $(home-k8s-terraform-provider-cloudflare-api-token)
+            - name: TF_VAR_azuredevops_library_name
+              value: "home-k8s-cluster"
+            - name: TF_VAR_azuredevops_library_project_id
+              value: "$(System.TeamProjectId)"
+            - name: AZDO_PERSONAL_ACCESS_TOKEN
+              value: $(System.AccessToken)
+            - name: AZDO_ORG_SERVICE_URL
+              value: $(System.TeamFoundationCollectionUri)
+            - name: CLOUDFLARE_API_TOKEN
+              value: $(home-k8s-terraform-provider-cloudflare-api-token)
           terraformPlanDestroy: false
           terraformApply: true
 
