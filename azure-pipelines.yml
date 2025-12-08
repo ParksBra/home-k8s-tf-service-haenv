@@ -39,6 +39,14 @@ stages:
       - group: home-k8s-cluster
       - group: home-k8s-terraform
     jobs:
+      - job: "installOpenssl"
+        displayName: "Install OpenSSL"
+        steps:
+          - script: |
+              sudo apt-get update
+              sudo apt-get install -y openssl
+            displayName: "Install OpenSSL"
+
       - template: apply-terraform.yml@templates
         parameters:
           kubeconfigArtifactName: "kubeconfigFile"
