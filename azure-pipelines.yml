@@ -1,0 +1,53 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: 'local-lab'
+  vmImage: 'ubuntu-latest'
+
+resources:
+  pipelines:
+    - pipeline: cluster-base
+      source: ParksBra.home-k8s-cluster-base
+    - pipeline: platform
+      source: ParksBra.home-k8s-platform
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: ParksBra
+      ref: initial_development
+      name: ParksBra/home-k8s-ado-templates
+
+    - repository: terraform-platform-network
+      type: github
+      endpoint: ParksBra
+      ref: migrate_to_self_contained
+      name: ParksBra/home-k8s-tf-platform-network
+
+    - repository: terraform-platform-storage
+      type: github
+      endpoint: ParksBra
+      ref: migrate_to_self_contained
+      name: ParksBra/home-k8s-tf-platform-storage
+
+stages:
+  - stage: "terraform-service-haenv"
+    displayName: "Service Haenv Terraform"
+    variables:
+      - group: home-k8s-terraform
+      - group: home-k8s-cluster
+    jobs:
+      - template: apply-service-tf.yml@templates
+        parameters:
+          kubeconfigArtifactName: kubeconfigFile
+          kubeconfigArtifactSource: cluster-base
+          terraformServiceRepository: self
+          terraformServiceRepositoryTerraformPath: terraform
+          terraformServiceName: haenv
+          terraformBackendNamespace: kube-system
+          terraformVariableLibraryName: home-k8s-cluster
+          terraformCloudflareApiTokenSecretName: home-k8s-terraform-provider-cloudflare-api-token
+          terraformDestroy: false
+          terraformApply: true
