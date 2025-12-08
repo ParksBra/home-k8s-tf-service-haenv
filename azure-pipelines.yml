@@ -32,6 +32,22 @@ resources:
       ref: migrate_to_self_contained
       name: ParksBra/home-k8s-tf-platform-storage
 
+parameters:
+  - name: terraformValidate
+    displayName: 'Enable Terraform Validation Before Plan'
+    type: boolean
+    default: true
+
+  - name: terraformApply
+    displayName: 'Enable Terraform Apply After Plan'
+    type: boolean
+    default: true
+
+  - name: terraformPlanDestroy
+    displayName: 'Terraform Plan Destruction'
+    type: boolean
+    default: false
+
 stages:
   - stage: "serviceHaenvDeployment"
     displayName: "Homeassistant Environment Service Deployment"
@@ -71,6 +87,7 @@ stages:
                   value: $(System.TeamFoundationCollectionUri)
                 - name: CLOUDFLARE_API_TOKEN
                   value: $(home-k8s-terraform-provider-cloudflare-api-token)
-              terraformPlanDestroy: false
-              terraformApply: true
+              terraformValidate: ${{ parameters.terraformValidate }}
+              terraformPlanDestroy: ${{ parameters.terraformPlanDestroy }}
+              terraformApply: ${{ parameters.terraformApply }}
 
