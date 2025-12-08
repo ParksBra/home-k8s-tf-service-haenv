@@ -33,21 +33,27 @@ resources:
       name: ParksBra/home-k8s-tf-platform-storage
 
 stages:
-  - stage: "terraform-service-haenv"
-    displayName: "Service Haenv Terraform"
+  - stage: "serviceHaenvDeployment"
+    displayName: "Homeassistant Environment Service Deployment"
     variables:
-      - group: home-k8s-terraform
       - group: home-k8s-cluster
+      - group: home-k8s-terraform
     jobs:
-      - template: apply-service-tf.yml@templates
+      - template: apply-terraform.yml@templates
         parameters:
-          kubeconfigArtifactName: kubeconfigFile
-          kubeconfigArtifactSource: cluster-base
-          terraformServiceRepository: self
-          terraformServiceRepositoryTerraformPath: terraform
-          terraformServiceName: haenv
-          terraformBackendNamespace: kube-system
-          terraformVariableLibraryName: home-k8s-cluster
-          terraformCloudflareApiTokenSecretName: home-k8s-terraform-provider-cloudflare-api-token
-          terraformDestroy: false
+          kubeconfigArtifactName: "kubeconfigFile"
+          kubeconfigArtifactSourcePipeline: "cluster-base"
+          terraformPlatformRepository: "self"
+          terraformPlatformRepositoryTerraformPath: "terraform"
+          terraformVersion: "latest"
+          terraformBackendNamespace: "kube-system"
+          terraformBackendSuffix: "service-haenv"
+          terraformExtraEnvironmentVariables:
+            TF_VAR_azuredevops_library_name: "home-k8s-cluster"
+            TF_VAR_azuredevops_library_project_id: "$(System.TeamProjectId)"
+            AZDO_PERSONAL_ACCESS_TOKEN: $(System.AccessToken)
+            AZDO_ORG_SERVICE_URL: $(System.TeamFoundationCollectionUri)
+            CLOUDFLARE_API_TOKEN: $(home-k8s-terraform-provider-cloudflare-api-token)
+          terraformPlanDestroy: false
           terraformApply: true
+
