@@ -57,7 +57,7 @@ stages:
       - job: "applyHaenvService"
         displayName: "Apply Homeassistant Environment Service Terraform"
         steps:
-          - script: sudo apt-get install -y openssl
+          - script: apt install -y openssl
             displayName: "Install OpenSSL as Prerequisite for Mosquitto Password Hashing"
 
           - template: apply-terraform.yml@templates
