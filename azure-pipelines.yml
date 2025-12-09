@@ -5,7 +5,6 @@ trigger:
 
 pool:
   name: 'local-lab'
-  vmImage: 'ubuntu-latest'
 
 resources:
   pipelines:
@@ -37,41 +36,39 @@ parameters:
     type: boolean
     default: true
 
-  - name: terraformApply
-    displayName: 'Enable Terraform Apply After Plan'
-    type: boolean
-    default: true
+  - name: terraformPlanMode
+    displayName: 'Terraform Plan Mode'
+    type: string
+    values:
+      - "normal"
+      - "destroy"
+    default: "normal"
 
-  - name: terraformPlanDestroy
-    displayName: 'Terraform Plan Destruction'
+  - name: terraformApply
+    displayName: 'Enable Terraform Apply After Plan (Manual Triggers Only)'
     type: boolean
     default: false
 
+variables:
+  - group: home-k8s-cluster
+  - group: home-k8s-terraform
+
 stages:
-  - stage: "serviceHaenvDeployment"
-    displayName: "Homeassistant Environment Service Deployment"
-    variables:
-      - group: home-k8s-cluster
-      - group: home-k8s-terraform
-    jobs:
-      - job: "applyHaenvService"
-        displayName: "Apply Homeassistant Environment Service Terraform"
-        steps:
-          - template: apply-terraform.yml@templates
-            parameters:
-              kubeconfigArtifactFileName: "kubeconfig"
-              kubeconfigArtifactName: "kubeConfig"
-              kubeconfigArtifactSourcePipeline: "cluster-base"
-              terraformRepository: "self"
-              terraformRepositoryTerraformPath: "terraform"
-              terraformVersion: "latest"
-              terraformBackendNamespace: "kube-system"
-              terraformBackendSuffix: "service-haenv"
-              terraformVariables: []
-              terraformExtraEnvironmentVariables:
-                - name: CLOUDFLARE_API_TOKEN
-                  value: $(home-k8s-terraform-provider-cloudflare-api-token)
-              terraformValidate: ${{ parameters.terraformValidate }}
-              terraformPlanDestroy: ${{ parameters.terraformPlanDestroy }}
-              terraformApply: ${{ parameters.terraformApply }}
+  - template: terraform.yml@templates
+    parameters:
+      kubeconfigArtifactFileName: "kubeconfig"
+      kubeconfigArtifactName: "kubeConfig"
+      kubeconfigArtifactSourcePipeline: "cluster-base"
+      terraformRepository: "self"
+      terraformRepositoryTerraformPath: "terraform"
+      terraformVersion: "latest"
+      terraformBackendNamespace: "kube-system"
+      terraformBackendSuffix: "service-haenv"
+      terraformVariables: []
+      terraformExtraEnvironmentVariables:
+        - name: CLOUDFLARE_API_TOKEN
+          value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
+      terraformValidate: ${{ parameters.terraformValidate }}
+      terraformPlanDestroy: ${{ eq(parameters.terraformPlanMode, 'destroy') }}
+      terraformApply: ${{ parameters.terraformApply }}
 
