@@ -21,13 +21,13 @@ resources:
     - repository: terraform-platform-network
       type: github
       endpoint: ParksBra
-      ref: migrate_to_self_contained
+      ref: main
       name: ParksBra/home-k8s-tf-platform-network
 
     - repository: terraform-platform-storage
       type: github
       endpoint: ParksBra
-      ref: migrate_to_self_contained
+      ref: main
       name: ParksBra/home-k8s-tf-platform-storage
 
 parameters:
