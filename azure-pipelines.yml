@@ -62,8 +62,8 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                sudo apt-get update
-                sudo apt-get install -y openssl
+                apt-get update
+                apt-get install -y openssl
 
           - template: apply-terraform.yml@templates
             parameters:
