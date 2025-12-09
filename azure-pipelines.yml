@@ -57,7 +57,7 @@ stages:
       - job: "applyHaenvService"
         displayName: "Apply Homeassistant Environment Service Terraform"
         steps:
-          - script: apt install -y openssl
+          - script: apk add openssl
             displayName: "Install OpenSSL as Prerequisite for Mosquitto Password Hashing"
 
           - template: apply-terraform.yml@templates
