@@ -76,6 +76,7 @@ stages:
               terraformVersion: "latest"
               terraformBackendNamespace: "kube-system"
               terraformBackendSuffix: "service-haenv"
+              terraformVariables: []
               terraformExtraEnvironmentVariables:
                 - name: CLOUDFLARE_API_TOKEN
                   value: $(home-k8s-terraform-provider-cloudflare-api-token)
