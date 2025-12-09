@@ -1,0 +1,74 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: 'local-lab'
+
+resources:
+  pipelines:
+    - pipeline: cluster-base
+      source: ParksBra.home-k8s-cluster-base
+
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: ParksBra
+      ref: initial_development
+      name: ParksBra/home-k8s-ado-templates
+
+    - repository: terraform-platform-network
+      type: github
+      endpoint: ParksBra
+      ref: main
+      name: ParksBra/home-k8s-tf-platform-network
+
+    - repository: terraform-platform-storage
+      type: github
+      endpoint: ParksBra
+      ref: main
+      name: ParksBra/home-k8s-tf-platform-storage
+
+parameters:
+  - name: terraformValidate
+    displayName: 'Enable Terraform Validation Before Plan'
+    type: boolean
+    default: true
+
+  - name: terraformPlanMode
+    displayName: 'Terraform Plan Mode'
+    type: string
+    values:
+      - "normal"
+      - "destroy"
+    default: "normal"
+
+  - name: terraformApply
+    displayName: 'Enable Terraform Apply After Plan (Manual Triggers Only)'
+    type: boolean
+    default: false
+
+variables:
+  - group: home-k8s-cluster
+  - group: home-k8s-terraform
+
+stages:
+  - template: terraform.yml@templates
+    parameters:
+      kubeconfigArtifactFileName: "kubeconfig"
+      kubeconfigArtifactName: "kubeConfig"
+      kubeconfigArtifactSourcePipeline: "cluster-base"
+      terraformRepository: "self"
+      terraformRepositoryTerraformPath: "terraform"
+      terraformVersion: "latest"
+      terraformBackendNamespace: "kube-system"
+      terraformBackendSuffix: "service-haenv"
+      terraformVariables: []
+      terraformExtraEnvironmentVariables:
+        - name: CLOUDFLARE_API_TOKEN
+          value: "$(home-k8s-terraform-provider-cloudflare-api-token)"
+      terraformValidate: ${{ parameters.terraformValidate }}
+      terraformPlanDestroy: ${{ eq(parameters.terraformPlanMode, 'destroy') }}
+      terraformApply: ${{ parameters.terraformApply }}
+

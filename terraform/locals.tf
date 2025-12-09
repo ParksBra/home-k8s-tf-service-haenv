@@ -1,22 +1,46 @@
 locals {
-  environment_namespace = data.kubernetes_namespace.namespace.metadata[0].name
-  environment_ingress_class_name = var.ingress_class_name
-  environment_ingress_annotations = var.ingress_annotations
-  parent_domain = var.parent_domain
-  homeassistant_subdomain = "${var.homeassistant_subdomain}.${local.parent_domain}"
-  homeassistant_codeserver_subdomain = var.codeserver_enabled ? "${var.homeassistant_codeserver_subdomain}.${local.homeassistant_subdomain}" : ""
-  zigbee2mqtt_subdomain = var.zigbee2mqtt_enabled ? "${var.zigbee2mqtt_subdomain}.${local.parent_domain}" : ""
+  # Network reference
+  external_domain = data.kubernetes_config_map.network_context.data.external_domain
+  external_ingress_ip = data.kubernetes_config_map.network_context.data.external_ingress_ip
 
-  environment_storage_class_name = var.storage_class_name
-  homeassistant_storage_size_gb = var.homeassistant_storage_size_gb
-  mosquitto_storage_size_gb = var.mosquitto_storage_size_gb
-  zigbee2mqtt_storage_size_gb = var.zigbee2mqtt_storage_size_gb
+  pod_network_cidr = data.kubernetes_config_map.network_context.data.pod_network_cidr
+  service_network_cidr = data.kubernetes_config_map.network_context.data.service_network_cidr
+  cluster_domain = data.kubernetes_config_map.network_context.data.cluster_domain
 
-  akri_udev_discovery_rules_list = [
-    "SUBSYSTEM==\"${var.akri_udev_subsystem}\", ATTRS{idVendor}==\"${var.akri_zigbee_radio_vendor_id}\", ATTRS{idProduct}==\"${var.akri_zigbee_radio_product_id}\""
+  cluster_issuer_created = tobool(data.kubernetes_config_map.network_context.data.cert_manager_cluster_issuer_created)
+  cluster_issuer_name = data.kubernetes_config_map.network_context.data.cert_manager_cluster_issuer_name
+
+  dns_records_default_comment = data.kubernetes_config_map.network_context.data.dns_records_default_comment
+  dns_records_proxy_enabled = tobool(data.kubernetes_config_map.network_context.data.dns_records_proxy_enabled)
+  dns_ttl_seconds = tonumber(data.kubernetes_config_map.network_context.data.dns_ttl_seconds)
+
+  ingress_class_name = data.kubernetes_config_map.network_context.data.primary_ingress_class_name
+
+  storage_class_name = data.kubernetes_config_map.storage_context.data.primary_storage_class_name
+}
+
+locals {
+  # Homeassistant environment configuration
+  haenv_enabled = true
+  haenv_namespace = "home-assistant"
+  haenv_ingress_class_name = local.ingress_class_name
+  haenv_homeassistant_storage_size_gb = 32
+  haenv_mosquitto_storage_size_gb = 8
+  haenv_zigbee2mqtt_storage_size_gb = 8
+
+  haenv_chart_linting_enabled = false
+
+  haenv_ingress_annotations = local.cluster_issuer_created ? {
+    "cert-manager.io/cluster-issuer" = local.cluster_issuer_name
+  } : {}
+
+  create_dns_records = true
+
+  haenv_homeassistant_trusted_proxies = [
+    "127.0.0.0/8",
+    local.pod_network_cidr,
+    local.service_network_cidr
   ]
-  akri_udev_serial_port = var.zigbee2mqtt_enabled && length(data.kubernetes_resources.akri_udev_instances[0].objects) > 0 ? data.kubernetes_resources.akri_udev_instances[0].objects[0].spec.brokerProperties.UDEV_DEVNODE_0 : null
 
-  mosquitto_mqtt_broker_address = var.mosquitto_enabled ? "mqtt://${module.mosquitto[0].service_address}:${module.mosquitto[0].service_mqtt_port}" : ""
-
+  haenv_mosquitto_admin_username = "admin"
 }

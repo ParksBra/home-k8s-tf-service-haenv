@@ -1,6 +1,6 @@
 module "mosquitto" {
   count = var.mosquitto_enabled ? 1 : 0
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/mosquitto?ref=1.0.0"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/mosquitto?ref=1.4.0"
   depends_on = [
     data.kubernetes_namespace.namespace
   ]
@@ -11,8 +11,6 @@ module "mosquitto" {
   chart_recreate_pods             = var.chart_recreate_pods
   chart_replace                   = var.chart_replace
   chart_upgrade_install           = var.chart_upgrade_install
-
-  python_executable               = var.python_executable
 
   namespace                       = data.kubernetes_namespace.namespace.metadata[0].name
   create_namespace                = false
