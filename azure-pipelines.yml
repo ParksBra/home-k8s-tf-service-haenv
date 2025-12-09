@@ -11,8 +11,7 @@ resources:
   pipelines:
     - pipeline: cluster-base
       source: ParksBra.home-k8s-cluster-base
-    - pipeline: platform
-      source: ParksBra.home-k8s-platform
+
   repositories:
     - repository: templates
       type: github
