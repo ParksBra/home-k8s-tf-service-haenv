@@ -64,6 +64,12 @@ variable "zigbee2mqtt_subdomain" {
   default     = "z2m"
 }
 
+variable "zigbee2mqtt_adapter_type_override" {
+  description = "Override the automatically detected Zigbee2MQTT adapter type. If empty, the adapter type will be determined based on the vendor ID."
+  type        = string
+  default     = null
+}
+
 variable "enable_persistent_storage" {
   description = "Whether to enable persistent storage for the Home Assistant environment."
   type        = bool
