@@ -35,15 +35,15 @@ variable "mosquitto_admin_password" {
   sensitive   = true
 }
 
-variable "external_domain" {
-  description = "The external domain for the Home Assistant environment."
+variable "environment_domain" {
+  description = "The primary external domain for the Home Assistant environment."
   type        = string
 }
 
-variable "environment_subdomain" {
-  description = "The primary subdomain for the Home Assistant environment."
+variable "homeassistant_subdomain" {
+  description = "The subdomain for Home Assistant. If null, base environment_domain will be used."
   type        = string
-  default     = "home"
+  default     = null
 }
 
 variable "homeassistant_trusted_proxies" {

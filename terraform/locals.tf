@@ -36,6 +36,8 @@ locals {
 
   create_dns_records = true
 
+  haenv_subdomain = "home"
+
   haenv_homeassistant_trusted_proxies = [
     "127.0.0.0/8",
     local.pod_network_cidr,
