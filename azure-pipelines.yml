@@ -11,24 +11,30 @@ resources:
     - pipeline: cluster-base
       source: ParksBra.home-k8s-cluster-base
 
+    - pipeline: platform-network
+      source: ParksBra.home-k8s-tf-platform-network
+      trigger:
+        branches:
+          include:
+            - main
+        stages:
+          - applyTerraform
+
+    - pipeline: platform-storage
+      source: ParksBra.home-k8s-tf-platform-storage
+      trigger:
+        branches:
+          include:
+            - main
+        stages:
+          - applyTerraform
+
   repositories:
     - repository: templates
       type: github
       endpoint: ParksBra
-      ref: initial_development
+      ref: main
       name: ParksBra/home-k8s-ado-templates
-
-    - repository: terraform-platform-network
-      type: github
-      endpoint: ParksBra
-      ref: main
-      name: ParksBra/home-k8s-tf-platform-network
-
-    - repository: terraform-platform-storage
-      type: github
-      endpoint: ParksBra
-      ref: main
-      name: ParksBra/home-k8s-tf-platform-storage
 
 parameters:
   - name: terraformValidate
