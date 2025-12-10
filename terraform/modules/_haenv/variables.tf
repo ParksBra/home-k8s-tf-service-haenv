@@ -40,8 +40,8 @@ variable "external_domain" {
   type        = string
 }
 
-variable "homeassistant_subdomain" {
-  description = "The subdomain for Home Assistant."
+variable "environment_subdomain" {
+  description = "The primary subdomain for the Home Assistant environment."
   type        = string
   default     = "home"
 }
