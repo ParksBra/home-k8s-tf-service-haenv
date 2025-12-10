@@ -23,5 +23,5 @@ locals {
     "1cf1" = "deconz"
     "1915" = "zboss"
   }
-  zigbee2mqtt_adapter_type = lookup(local.zigbee2mqtt_adapter_type_map, var.akri_zigbee_radio_vendor_id, "")
+  zigbee2mqtt_adapter_type = lookup(local.zigbee2mqtt_adapter_type_map, lower(var.akri_zigbee_radio_vendor_id), "")
 }
