@@ -51,9 +51,9 @@ parameters:
     default: "normal"
 
   - name: terraformApply
-    displayName: 'Enable Terraform Apply After Plan (Manual Triggers Only)'
+    displayName: 'Enable Terraform Apply After Plan'
     type: boolean
-    default: false
+    default: true
 
 variables:
   - group: home-k8s-cluster
