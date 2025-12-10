@@ -17,5 +17,11 @@ locals {
   akri_udev_serial_port = var.zigbee2mqtt_enabled && length(data.kubernetes_resources.akri_udev_instances[0].objects) > 0 ? data.kubernetes_resources.akri_udev_instances[0].objects[0].spec.brokerProperties.UDEV_DEVNODE_0 : null
 
   mosquitto_mqtt_broker_address = var.mosquitto_enabled ? "mqtt://${module.mosquitto[0].service_address}:${module.mosquitto[0].service_mqtt_port}" : ""
-
+  zigbee2mqtt_adapter_type_map = {
+    "0451" = "zstack"
+    "10c4" = "ember"
+    "1cf1" = "deconz"
+    "1915" = "zboss"
+  }
+  zigbee2mqtt_adapter_type = lookup(local.zigbee2mqtt_adapter_type_map, var.akri_zigbee_radio_vendor_id, "")
 }

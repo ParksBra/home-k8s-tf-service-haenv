@@ -36,4 +36,5 @@ module "zigbee2mqtt" {
   } : {}
 
   zigbee_serial_port       = local.akri_udev_serial_port
+  zigbee_adapter_type      = local.zigbee2mqtt_adapter_type
 }
