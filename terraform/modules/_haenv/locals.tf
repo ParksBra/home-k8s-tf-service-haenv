@@ -13,7 +13,7 @@ locals {
   zigbee2mqtt_storage_size_gb = var.zigbee2mqtt_storage_size_gb
 
   akri_udev_discovery_rules_list = [
-    "SUBSYSTEM==\"${var.akri_udev_subsystem}\", ATTRS{idVendor}==\"${var.akri_zigbee_radio_vendor_id}\", ATTRS{idProduct}==\"${var.akri_zigbee_radio_product_id}\""
+    "SUBSYSTEM==\"${var.akri_udev_subsystem}\"", "ATTRS{idVendor}==\"${var.akri_zigbee_radio_vendor_id}\"", "ATTRS{idProduct}==\"${var.akri_zigbee_radio_product_id}\""
   ]
   akri_udev_serial_port = var.zigbee2mqtt_enabled && length(data.kubernetes_resources.akri_udev_instances[0].objects) > 0 ? data.kubernetes_resources.akri_udev_instances[0].objects[0].spec.brokerProperties.UDEV_DEVNODE_0 : null
 
