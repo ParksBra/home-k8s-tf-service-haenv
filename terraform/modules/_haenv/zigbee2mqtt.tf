@@ -1,6 +1,6 @@
 module "zigbee2mqtt" {
   count = var.zigbee2mqtt_enabled ? 1 : 0
-  source = "github.com/ParksBra/home-k8s-tf-lib//modules/zigbee2mqtt?ref=1.4.1"
+  source = "github.com/ParksBra/home-k8s-tf-lib//modules/zigbee2mqtt?ref=1.4.2"
   depends_on = [
     data.kubernetes_namespace.namespace,
     module.akri,
@@ -36,4 +36,5 @@ module "zigbee2mqtt" {
   } : {}
 
   zigbee_serial_port       = local.akri_udev_serial_port
+  zigbee_adapter_type      = local.zigbee2mqtt_adapter_type
 }

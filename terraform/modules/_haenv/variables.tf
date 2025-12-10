@@ -35,15 +35,15 @@ variable "mosquitto_admin_password" {
   sensitive   = true
 }
 
-variable "external_domain" {
-  description = "The external domain for the Home Assistant environment."
+variable "environment_domain" {
+  description = "The primary external domain for the Home Assistant environment."
   type        = string
 }
 
-variable "environment_subdomain" {
-  description = "The primary subdomain for the Home Assistant environment."
+variable "homeassistant_subdomain" {
+  description = "The subdomain for Home Assistant. If null, base environment_domain will be used."
   type        = string
-  default     = "home"
+  default     = null
 }
 
 variable "homeassistant_trusted_proxies" {
@@ -62,6 +62,12 @@ variable "zigbee2mqtt_subdomain" {
   description = "The subdomain for Zigbee2MQTT."
   type        = string
   default     = "z2m"
+}
+
+variable "zigbee2mqtt_adapter_type_override" {
+  description = "Override the automatically detected Zigbee2MQTT adapter type. If empty, the adapter type will be determined based on the vendor ID."
+  type        = string
+  default     = null
 }
 
 variable "enable_persistent_storage" {
@@ -101,15 +107,15 @@ variable "akri_udev_subsystem" {
 }
 
 variable "akri_zigbee_radio_vendor_id" {
-  description = "The USB vendor ID of the Zigbee radio for Akri device discovery. Default is 'ea60' for Home Assistant Connect ZBT-1."
+  description = "The USB vendor ID of the Zigbee radio for Akri device discovery. Default is '10c4' for Silicon Labs (Home Assistant Connect ZBT-1)."
   type        = string
-  default     = "ea60"
+  default     = "10c4"
 }
 
 variable "akri_zigbee_radio_product_id" {
-  description = "The USB product ID of the Zigbee radio for Akri device discovery. Default is '10c4' for Home Assistant Connect ZBT-1."
+  description = "The USB product ID of the Zigbee radio for Akri device discovery. Default is 'ea60' for SkyConnect v1.0 (Home Assistant Connect ZBT-1)."
   type        = string
-  default     = "10c4"
+  default     = "ea60"
 }
 
 # Chart shared variables

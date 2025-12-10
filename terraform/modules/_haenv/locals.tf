@@ -2,10 +2,9 @@ locals {
   environment_namespace = data.kubernetes_namespace.namespace.metadata[0].name
   environment_ingress_class_name = var.ingress_class_name
   environment_ingress_annotations = var.ingress_annotations
-  external_domain = var.external_domain
-  homeassistant_subdomain = "${var.environment_subdomain}.${local.external_domain}"
-  homeassistant_codeserver_subdomain = var.codeserver_enabled ? "${var.homeassistant_codeserver_subdomain}.${local.homeassistant_subdomain}" : ""
-  zigbee2mqtt_subdomain = var.zigbee2mqtt_enabled ? "${var.zigbee2mqtt_subdomain}.${local.homeassistant_subdomain}" : ""
+  homeassistant_subdomain = var.homeassistant_subdomain != null ? "${var.homeassistant_subdomain}.${var.environment_domain}" : var.environment_domain
+  homeassistant_codeserver_subdomain = var.codeserver_enabled ? "${var.homeassistant_codeserver_subdomain}.${var.environment_domain}" : ""
+  zigbee2mqtt_subdomain = var.zigbee2mqtt_enabled ? "${var.zigbee2mqtt_subdomain}.${var.environment_domain}" : ""
 
   environment_storage_class_name = var.storage_class_name
   homeassistant_storage_size_gb = var.homeassistant_storage_size_gb
@@ -19,4 +18,12 @@ locals {
 
   mosquitto_mqtt_broker_address = var.mosquitto_enabled ? "mqtt://${module.mosquitto[0].service_address}:${module.mosquitto[0].service_mqtt_port}" : ""
 
+  zigbee2mqtt_adapter_type_map = {
+    "0451" = "zstack"
+    "10c4" = "ember"
+    "1cf1" = "deconz"
+    "1915" = "zboss"
+  }
+  zigbee2mqtt_adapter_type_default = null
+  zigbee2mqtt_adapter_type = var.zigbee2mqtt_adapter_type_override != null ? var.zigbee2mqtt_adapter_type_override : lookup(local.zigbee2mqtt_adapter_type_map, lower(var.akri_zigbee_radio_vendor_id), local.zigbee2mqtt_adapter_type_default)
 }
