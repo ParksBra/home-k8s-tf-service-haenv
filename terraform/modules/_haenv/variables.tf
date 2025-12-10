@@ -101,13 +101,13 @@ variable "akri_udev_subsystem" {
 }
 
 variable "akri_zigbee_radio_vendor_id" {
-  description = "The USB vendor ID of the Zigbee radio for Akri device discovery. Default is 'ea60' for Home Assistant Connect ZBT-1."
+  description = "The USB vendor ID of the Zigbee radio for Akri device discovery. Default is '10c4' for Silicon Labs (Home Assistant Connect ZBT-1)."
   type        = string
   default     = "10c4"
 }
 
 variable "akri_zigbee_radio_product_id" {
-  description = "The USB product ID of the Zigbee radio for Akri device discovery. Default is '10c4' for Home Assistant Connect ZBT-1."
+  description = "The USB product ID of the Zigbee radio for Akri device discovery. Default is 'ea60' for SkyConnect v1.0 (Home Assistant Connect ZBT-1)."
   type        = string
   default     = "ea60"
 }
