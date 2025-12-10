@@ -18,7 +18,7 @@ resources:
           include:
             - main
         stages:
-          - applyTerraformLatest
+          - applyTerraform
 
     - pipeline: platform-storage
       source: ParksBra.home-k8s-tf-platform-storage
@@ -27,7 +27,7 @@ resources:
           include:
             - main
         stages:
-          - applyTerraformLatest
+          - applyTerraform
 
   repositories:
     - repository: templates
