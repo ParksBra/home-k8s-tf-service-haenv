@@ -1,6 +1,6 @@
 module "mosquitto" {
   count = var.mosquitto_enabled ? 1 : 0
-  source = "./mosquitto"
+  source = "../mosquitto"
   depends_on = [
     data.kubernetes_namespace.namespace
   ]

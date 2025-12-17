@@ -1,5 +1,5 @@
 module "homeassistant" {
-  source = "./homeassistant"
+  source = "../homeassistant"
   depends_on = [
     data.kubernetes_namespace.namespace
   ]
