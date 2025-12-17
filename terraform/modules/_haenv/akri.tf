@@ -1,6 +1,6 @@
 module "akri" {
   count = var.zigbee2mqtt_enabled ? 1 : 0
-  source = "akri"
+  source = "./akri"
   depends_on = [
     data.kubernetes_namespace.namespace,
   ]
