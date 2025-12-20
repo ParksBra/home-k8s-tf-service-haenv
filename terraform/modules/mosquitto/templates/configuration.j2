@@ -1,0 +1,7 @@
+persistence {{ data_persistence_enabled | string | lower }}
+persistence_location {{ persistence_path }}
+log_dest stdout
+listener {{ mqtt_port }}
+protocol mqtt
+listener {{ websocket_port }}
+protocol websockets

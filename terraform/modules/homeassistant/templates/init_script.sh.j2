@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+# Check if the configuration file exists
+if [ ! -f /config/configuration.yaml ]; then
+  echo "Configuration file not found, creating a new one"
+  cp /config-templates/configuration.yaml /config/configuration.yaml
+fi
+
+# Check if the force init is enabled
+forceInit="{{ force_configuration_init | string | lower }}"
+if [ "$forceInit" = "true" ]; then
+  echo "Force init is enabled, overwriting the configuration file"
+  current_time=$(date +%Y%m%d_%H%M%S)
+  echo "Backup the current configuration file to configuration.yaml.$current_time"
+  cp /config/configuration.yaml /config/configuration.yaml.$current_time
+  echo "Before cleanup - all backup files:"
+  ls -l /config/configuration.yaml.*
+  echo "Cleaning up - keeping only {{ max_configuration_backups }} most recent backups..."
+  ls -t /config/configuration.yaml.* 2>/dev/null | tail -n +{{ max_configuration_backups + 1 }} | xargs -r rm
+  echo "After cleanup - remaining backup files:"
+  ls -l /config/configuration.yaml.*
+  echo "Overwriting the configuration file with the template"
+  cat /config-templates/configuration.yaml > /config/configuration.yaml
+fi
+
+{% for config in included_configurations %}
+# Check if the {{ config }}s file exists
+if [ ! -f /config/{{ config }}s.yaml ]; then
+  echo "{{ config }}s file not found, creating a new one"
+  touch /config/{{ config }}s.yaml
+  echo "[]" >> /config/{{ config }}s.yaml
+fi
+{% endfor %}
+
+echo "Initialization complete."

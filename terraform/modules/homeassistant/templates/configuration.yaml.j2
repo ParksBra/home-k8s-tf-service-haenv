@@ -1,0 +1,21 @@
+default_config:
+
+logger:
+  default: {{ logging_level }}
+{% for config in included_configurations %}
+{{ config }}: !include {{ config }}s.yaml
+{% endfor %}
+
+{% if enable_my_ha %}
+my:
+{% endif %} {% if enable_mobile_app %}
+mobile_app:
+{% endif %}
+http:
+  server_port: 8123 # Keep as default unless helm chart is changed
+  ip_ban_enabled: {{ ip_ban_enabled | string | lower }}
+  login_attempts_threshold: {{ ip_ban_threshold }}
+  use_x_forwarded_for: {{ use_x_forwarded_for | string | lower }}
+  trusted_proxies:
+    {% for proxy in trusted_proxies %}
+    - {{ proxy }} {% endfor %}
