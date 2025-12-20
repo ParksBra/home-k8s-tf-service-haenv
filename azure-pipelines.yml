@@ -11,15 +11,6 @@ resources:
     - pipeline: cluster-base
       source: ParksBra.home-k8s-cluster-base
 
-    - pipeline: platform-network
-      source: ParksBra.home-k8s-tf-platform-network
-      trigger:
-        branches:
-          include:
-            - main
-        stages:
-          - applyTerraform
-
     - pipeline: platform-storage
       source: ParksBra.home-k8s-tf-platform-storage
       trigger:
