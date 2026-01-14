@@ -24,6 +24,13 @@ module "akri" {
       effect   = "NoSchedule"
     }
   ]
+  controller_tolerations = [
+    {
+      key      = "node-role.kubernetes.io/control-plane"
+      operator = "Exists"
+      effect   = "NoSchedule"
+    }
+  ]
 }
 
 data "kubernetes_resources" "akri_udev_instances" {
