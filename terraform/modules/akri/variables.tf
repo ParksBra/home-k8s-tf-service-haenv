@@ -90,6 +90,30 @@ variable "controller_image_pull_policy" {
   default     = "Always"
 }
 
+variable "controller_node_selector" {
+  description = "Node selector for the Akri controller pods."
+  type        = map(string)
+  default     = {}
+}
+
+variable "controller_tolerations" {
+  description = "Tolerations for the Akri controller pods."
+  type        = list(map(string))
+  default     = []
+}
+
+variable "controller_allow_on_control_plane" {
+  description = "Whether to allow the Akri controller to be scheduled on control plane nodes."
+  type        = bool
+  default     = true
+}
+
+variable "controller_only_on_control_plane" {
+  description = "Whether to schedule the Akri controller only on control plane nodes."
+  type        = bool
+  default     = false
+}
+
 variable "agent_enabled" {
   description = "Whether to enable the Akri agent."
   type        = bool
@@ -118,6 +142,18 @@ variable "agent_image_pull_policy" {
   description = "The image pull policy for the Akri agent."
   type        = string
   default     = "Always"
+}
+
+variable "agent_node_selector" {
+  description = "Node selector for the Akri agent pods."
+  type        = map(string)
+  default     = {}
+}
+
+variable "agent_tolerations" {
+  description = "Tolerations for the Akri agent pods."
+  type        = list(map(string))
+  default     = []
 }
 
 variable "udev_enabled" {
