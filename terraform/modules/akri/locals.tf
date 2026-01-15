@@ -1,6 +1,6 @@
 locals {
   repository = "https://project-akri.github.io/akri"
-  chart_reference = "akri-dev"
+  chart_reference = "akri"
 
   chart_install_name = var.chart_install_name != null ? var.chart_install_name : local.chart_reference
 
