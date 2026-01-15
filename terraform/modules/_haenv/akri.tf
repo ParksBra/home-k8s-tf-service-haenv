@@ -14,9 +14,6 @@ module "akri" {
   udev_discovery_group_recursive = true
   udev_discovery_rules_list      = local.akri_udev_discovery_rules_list
 
-  controller_allow_on_control_plane = true
-  controller_only_on_control_plane  = true
-
   agent_tolerations = [
     {
       key      = "node-role.kubernetes.io/control-plane"
@@ -24,6 +21,9 @@ module "akri" {
       effect   = "NoSchedule"
     }
   ]
+  controller_node_selector = {
+    "node-role.kubernetes.io/control-plane" = ""
+  }
   controller_tolerations = [
     {
       key      = "node-role.kubernetes.io/control-plane"
