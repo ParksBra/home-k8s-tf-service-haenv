@@ -105,7 +105,7 @@ variable "controller_tolerations" {
 variable "controller_allow_on_control_plane" {
   description = "Whether to allow the Akri controller to be scheduled on control plane nodes."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "controller_only_on_control_plane" {
