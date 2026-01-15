@@ -24,14 +24,14 @@ module "akri" {
     }
   ]
   controller_node_selector = {
-    "node-role.kubernetes.io/control-plane" = ""
+    # "node-role.kubernetes.io/control-plane" = ""
   }
   controller_tolerations = [
-    {
-      key      = "node-role.kubernetes.io/control-plane"
-      operator = "Exists"
-      effect   = "NoSchedule"
-    }
+    # {
+    #   key      = "node-role.kubernetes.io/control-plane"
+    #   operator = "Exists"
+    #   effect   = "NoSchedule"
+    # }
   ]
 }
 
