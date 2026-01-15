@@ -14,8 +14,6 @@ module "akri" {
   udev_discovery_group_recursive = true
   udev_discovery_rules_list      = local.akri_udev_discovery_rules_list
 
-  chart_linting_enabled = false
-
   chart_version = "0.13.20"
 
   agent_tolerations = [
