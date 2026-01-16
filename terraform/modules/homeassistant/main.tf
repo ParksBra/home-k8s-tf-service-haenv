@@ -47,10 +47,6 @@ resource "helm_release" "application" {
         value = "home-assistant-data-pv"
       },
       {
-        name  = "persistence.existingClaim"
-        value = "home-assistant-data-pvc"
-      },
-      {
         name  = "persistence.size"
         value = "${var.data_volume_size_gb}Gi"
       },
